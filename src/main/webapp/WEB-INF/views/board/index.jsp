@@ -8,9 +8,26 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+.dataRow:hover{
+	background: #eee;
+	cursor: pointer;
+}
+</style>
 <title>게시판 목록</title>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+$(function() {
+	// 데이터의 한줄 클릭 이벤트 처리 -> 글보기로 이동
+	$(".dataRow").click(function() {
+		var no = $(this).find(".no").text();
+		location="readView?no=" + no + "&inc=1";		
+	});
+});
+</script>
 </head>
 <body>
+<div class="container">
 	<h1>게시판 리스트</h1>
 	<hr>
 		<button value="write" onclick="location.href='/board/writeView'">글쓰기</button>
@@ -29,8 +46,8 @@
 		<tbody>
 			<!--데이터가 있는 만큼 <tr>이 반복됨 -->
 			<c:forEach items="${list}" var="dto">
-				<tr>
-					<td>${dto.no}</td>
+				<tr class="dataRow">
+					<td class="no">${dto.no}</td>
 					<td>${dto.title}</td>
 					<td>${dto.writer}</td>
 					<td><fmt:formatDate value="${dto.writeDate}" pattern="yyyy-MM-dd-hh:mm"/></td>
@@ -40,5 +57,6 @@
 			</c:forEach>
 		</tbody>
 	</table>
+</div>
 </body>
 </html>

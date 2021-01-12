@@ -3,9 +3,34 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd 
-						http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo-1.8.xsd">
+						http://www.springframework.org/schema/data/mongo http://www.springframework.org/schema/data/mongo/spring-mongo.xsd">
 	
 	<!-- Root Context: defines shared resources visible to all other web components -->
 	
+	<!-- 몽고DB 연동 -->
+	<bean id="mongoClientOptions" class="org.springframework.data.mongodb.core.MongoClientOptionsFactoryBean">
+		<property name="connectionsPerHost" value="3" />
+		<property name="connectTimeout" value="1000" />
+		<property name="maxWaitTime" value="1500" />
+		<property name="socketKeepAlive" value="true" />
+	</bean>
+	
+	<bean id="mongo" class="org.springframework.data.mongodb.core.MongoClientFactoryBean">
+		<property name="host" value="localhost" />
+		<property name="port" value="27017" />
+		<property name="mongoClientOptions" ref="mongoClientOptions" />
+	</bean>
+	
+	<bean id="simpleMongoDbFactory" class="org.springframework.data.mongodb.core.SimpleMongoDbFactory">
+		<constructor-arg name="mongo" ref="mongo" />
+		<constructor-arg name="databaseName" value="board"></constructor-arg>
+	</bean>
+	
+	<bean id="mongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg name="mongoDbFactory" ref="simpleMongoDbFactory" />
+	</bean>
+	
+	<!-- repository 등록 -->
+	<mongo:repositories base-package="board.dao" mongo-template-ref="mongoTemplate" />
 	
 </beans>

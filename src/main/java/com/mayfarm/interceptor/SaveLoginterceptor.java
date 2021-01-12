@@ -21,19 +21,15 @@ public class SaveLoginterceptor extends HandlerInterceptorAdapter{
 	// 처리해야할 내용의 앞에서 처리되는 인터셉터 정의 메서드
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception{
-		System.out.println(getClass().getSimpleName()+".preHandle()");
-		
+				
 		// log에 저장할 데이터를 수집-(모듈명,요청URI, IP, log 날짜)
 		String uri = request.getServletPath();
 		
 		// uri가 main이 아닌경우에만 처리
 		if (!uri.equals("/")) {
 			
-			System.out.println("path" + uri);
 			String module=uri.substring(1);
-			System.out.println(module); //출력: board/list.do
 			module= module.substring(0,module.indexOf("/")); 
-			System.out.println("module"+ module);//출력: board
 			String ip= request.getRemoteAddr();
 			Date logDate = new Date();
 			

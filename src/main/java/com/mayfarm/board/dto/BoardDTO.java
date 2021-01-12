@@ -26,4 +26,6 @@ public class BoardDTO {
 				", writer=" + writer + ", writeDate=" + writeDate + "hit=" + hit + "]";
 	}
 	
+	
+	
 }
