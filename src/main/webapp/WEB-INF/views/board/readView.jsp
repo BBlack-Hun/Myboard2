@@ -23,7 +23,7 @@
 			// 삭제
 			$(".delete_btn").on("click", function(){
 				
-				var deleteYN = confirm("삭제하시겠습니가?");
+				var deleteYN = confirm("삭제하시겠습니까?");
 				if(deleteYN == true){
 					
 				formObj.attr("action", "/board/delete");
@@ -36,9 +36,7 @@
 			// 목록
 			$(".list_btn").on("click", function(){
 				
-				location.href = "/board/index?page=${scrl.page}"
-								+"&perPageNum${scrl.perPageNum}"
-								+"&searchType=${scrl.searchType}&keyword=${scrl.keyword}";
+				location.href = "/board/index";
 			})
 		
 		})

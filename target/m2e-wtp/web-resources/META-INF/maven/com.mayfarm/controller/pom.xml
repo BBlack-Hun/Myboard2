@@ -173,6 +173,45 @@
 		    <version>1.18.16</version>
 		    <scope>provided</scope>
 		</dependency>
+		<!-- spring-Security-core -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-core</artifactId>
+		    <version>5.1.12.RELEASE</version>
+		</dependency>
+		<!-- spring-Security-web -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-web</artifactId>
+		    <version>5.1.12.RELEASE</version>
+		</dependency>
+		<!-- spring-security-config -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-config</artifactId>
+		    <version>5.1.12.RELEASE</version>
+		</dependency>
+		<!-- spring-security-taglib -->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		    <version>5.1.12.RELEASE</version>
+		</dependency>
+		<!-- CGlib -->
+		<dependency>
+		    <groupId>cglib</groupId>
+		    <artifactId>cglib</artifactId>
+		    <version>3.3.0</version>
+		</dependency>
+		<!-- pagenation /WEB-INF/lib -->
+		<dependency>
+			<groupId>net.webjjang</groupId>
+			<artifactId>util.pageObject</artifactId>
+			<version>1.0.0</version>
+			<scope>system</scope>
+			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/pageObject.jar</systemPath>
+		</dependency>
+		
 		
 	
 		<!-- Test -->

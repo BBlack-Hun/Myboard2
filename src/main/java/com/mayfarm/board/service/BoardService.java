@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.mayfarm.board.dao.BoardDAO;
 import com.mayfarm.board.dto.BoardDTO;
 
+import net.webjjang.util.PageObject;
+
 @Service
 public class BoardService {
 	
@@ -16,8 +18,9 @@ public class BoardService {
 	private BoardDAO dao;
 	
 	// 게시판 목록
-	public List<BoardDTO> list() {
-		return dao.list();
+	public List<BoardDTO> list(PageObject pageObject) {
+		pageObject.setTotalRow(dao.getTotalCount());
+		return dao.list(pageObject);
 	}
 	
 	// 글쓰기
@@ -36,14 +39,12 @@ public class BoardService {
 	
 	// 글 수정
 	public void update(BoardDTO boardDTO) {
-		boardDTO.setNo(dao.getNo());
 		dao.update(boardDTO);
 	}
 	
 	// 글 삭제
-	public void delete(BoardDTO boardDTO) {
-		boardDTO.setNo(dao.getNo());
-		dao.delete(boardDTO);
+	public void delete(int no) {
+		dao.delete(no);
 	}
 
 }

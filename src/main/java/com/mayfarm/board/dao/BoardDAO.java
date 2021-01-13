@@ -22,6 +22,8 @@ import com.mayfarm.board.dto.BoardDTO;
 import com.mongodb.DB;
 import com.mongodb.MongoException;
 
+import net.webjjang.util.PageObject;
+
 @Repository
 public class BoardDAO {
 	
@@ -29,11 +31,27 @@ public class BoardDAO {
 	private MongoTemplate mongoTemplate;
 	
 	// 게시판 목록
-	public List<BoardDTO> list() {
-		Query query = new Query().with(new Sort(Direction.DESC, "no"));
+	public List<BoardDTO> list(PageObject pageObject) {
+		// 원하는 데이터만 가져오기 위한 Query 생성 - 조건이 없는 쿼리
+		Query query = new Query();
+		
+		// 글의 역순으로 정렬하는 쿼리		
+		query = query.with(new Sort(Direction.DESC, "no"));
+		
+		// 이전 페이지의 데이터는 skip 시킨다.
+		query.skip((pageObject.getPage()-1) * pageObject.getPerPageNum());
+		
+		// 한 페이지에 표시할 데이터 만큼만 가져오기
+		query.limit(pageObject.getPerPageNum());
 		
 		// mongoTemplate.find(조건, 돌려받을 클래스, 컬렉션)
 		return mongoTemplate.find(query, BoardDTO.class, "board");
+		
+	}
+	
+	// 전체 개시글의 갯수
+	public Integer getTotalCount() {
+		return (int) mongoTemplate.count(new Query(),"board");
 	}
 	
 	// 글쓰기
@@ -75,6 +93,7 @@ public class BoardDAO {
 	
 	// 게시글 수정
 	public void update(BoardDTO boardDTO) {
+		
 		// 조건을 설정하는 객체 - query
 		Query query = new Query(Criteria.where("_id").is(boardDTO.getNo()));
 		
@@ -88,8 +107,10 @@ public class BoardDAO {
 	}
 	
 	// 게시글 삭제
-	public void delete(BoardDTO boardDTO) {
+	public void delete(int no) {
+		Query query = new Query(Criteria.where("_id").is(no));
 		
-//		mongoTemplate.drop
+		
+		mongoTemplate.remove(query, "board");
 	}
 }
